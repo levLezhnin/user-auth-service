@@ -1,0 +1,15 @@
+volumes:
+  user_auth:
+
+services:
+  postgres:
+    image: 'postgres:13'
+    container_name: 'postgres'
+    ports:
+      - '5432:5432'
+    volumes:
+      - user_auth:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=db
