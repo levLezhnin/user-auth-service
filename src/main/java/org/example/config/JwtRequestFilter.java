@@ -40,14 +40,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             } catch (ExpiredJwtException e) {
                 log.info("Token expired");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.setHeader("reason", "Token expired");
-                filterChain.doFilter(request, response);
                 return;
             } catch (SignatureException e) {
                 log.info("Invalid signature");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.setHeader("reason", "Invalid signature");
-                filterChain.doFilter(request, response);
                 return;
             }
         }
@@ -55,8 +51,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (RevokedTokensHelper.isTokenRevoked(jwt)) {
             log.info("Token revoked");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setHeader("reason", "Token revoked");
-            filterChain.doFilter(request, response);
             return;
         }
 
